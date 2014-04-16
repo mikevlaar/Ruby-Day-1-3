@@ -17,7 +17,7 @@ guesed = false
 while guesed == false
 	puts
 	puts 'Gues a Number: '
-	input = gets.chomp.to_i
+	input = gets.to_i
 
 	unless input == number
 		if input > number
