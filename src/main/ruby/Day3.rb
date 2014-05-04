@@ -7,40 +7,40 @@
 # Visit http://www.pragmaticprogrammer.com/titles/btlang for more book information.
 #---
 module ActsAsCsv
-  def self.included(base)
-    base.extend ClassMethods
-  end
-  
-  module ClassMethods
-    def acts_as_csv
-      include InstanceMethods
-    end
-  end
-  
-  module InstanceMethods   
-	attr_accessor :headers, :csv_contents
-    
-	def initialize
-      read 
-    end
-	
-    def read
-      @csv_contents = []
-	  fileLocation = "../../../res/"
-      filename = self.class.to_s.downcase + '.txt'
-      file = File.new(fileLocation + filename)
-      @headers = file.gets.chomp.split(', ')
-
-      file.each do |row|
-        csv_rows = row.chomp.split(', ')
-		@csv_contents << CsvRow.new(@headers, csv_rows)
-      end
-    end
-	
-	def each(&block)
-		@csv_contents.each &block
+	def self.included(base)
+		base.extend ClassMethods
 	end
-  end
+
+	module ClassMethods
+		def acts_as_csv
+			include InstanceMethods
+		end
+	end
+
+	module InstanceMethods   
+		attr_accessor :headers, :csv_contents
+
+		def initialize
+			read 
+		end
+
+		def read
+			@csv_contents = []
+			fileLocation = "../../../res/"
+			filename = self.class.to_s.downcase + '.txt'
+			file = File.new(fileLocation + filename)
+			@headers = file.gets.chomp.split(', ')
+
+			file.each do |row|
+				csv_rows = row.chomp.split(', ')
+				@csv_contents << CsvRow.new(@headers, csv_rows)
+			end
+		end
+
+		def each(&block)
+			@csv_contents.each &block
+		end
+	end
 end
 
 class CsvRow
